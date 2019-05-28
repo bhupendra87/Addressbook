@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Phonedirectory";
+}
+@if(ViewBag.message !=null)
+{
+    <h4>@ViewBag.message</h4>
+}
+
+@{ Html.RenderAction("Create"); }
+
+@{ Html.RenderAction("List"); }
+
+
+
+
