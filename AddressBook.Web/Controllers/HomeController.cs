@@ -6,16 +6,22 @@ using System.Web.Mvc;
 using AddressBook.Database;
 using AddressBook.Entities;
 using AddressBook.Service;
+using AddressBook.Web.Models;
+using System.Web.Security;
 
 namespace AddressBook.Web.Controllers
 {
     public class HomeController : Controller
     {
         int userId = 1;
-
+        private UserLogin obLogedInUser = null;
         public HomeController()
         {
-           User.Identity.
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                obLogedInUser = Singleton.Instance.obUserLogIn;
+            }             
+            
         }
       
         public ActionResult Index()
@@ -51,20 +57,49 @@ namespace AddressBook.Web.Controllers
         [HttpPost]
         public ActionResult Create(Phonedirectory obPhonedirectory)
         {
-           
+            string message = "";
             PhoneDirectoryService phoneDirectoryService = new PhoneDirectoryService();
+            //int userid = obLogedInUser.UserId;
+            obPhonedirectory.UserLogin = obLogedInUser;
             var result= phoneDirectoryService.Add(obPhonedirectory);
             if (result)
             {
-                TempData["message"] = "Phonedirectory is created successfully !!!";
+                message = "Phonedirectory is created successfully !!!";
             }
             else
             {
-                TempData["message"] = "Some error occured !!!";
+                message = "Some error occured !!!";
             }
-            return RedirectToAction("Phonedirectory");
+            return RedirectToAction("List");
 
         }
-        
+
+        [HttpGet]
+        public ActionResult Edit(int phoneDirectoryId)
+        {
+            EditViewModel model = new EditViewModel();
+            PhoneDirectoryService phoneDirectoryService = new PhoneDirectoryService();
+            var data = phoneDirectoryService.getDetails(obLogedInUser.UserId,phoneDirectoryId);
+            if(data !=null)
+            {
+                model.id = data.id;
+                model.Name = data.Name;
+                model.Mobile = data.Mobile;
+                model.Email = data.Email;
+                model.Website = data.Website;
+                model.Address = data.Address;
+                model.User_Id = data.UserLogin.UserId;               
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditViewModel Model)
+        {
+            EditViewModel model = new EditViewModel();
+            PhoneDirectoryService phoneDirectoryService = new PhoneDirectoryService();
+            Phonedirectory data = phoneDirectoryService.getDetails(obLogedInUser.UserId, Model.id);           
+            return PartialView("List");
+        }
     }
 }

@@ -1,6 +1,4 @@
 ﻿@model IEnumerable<AddressBook.Entities.Phonedirectory>
-
-
 <table class="table">
     <tr>
         <th>
@@ -21,29 +19,52 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mobile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+
+
+                <button class="editBtn" data-id="@item.id">Edit</button>
+                <button class="deleteBtn" data-id="@item.id">Delete</button>
+            </td>
+        </tr>
+    }
 
 </table>
+<script type="text/javascript">     
+
+     $(".editBtn").click(function () {
+		  $.ajax({
+				type: 'GET',
+				url: '@Url.Action("Edit", "Home")',
+              data: {
+                  phoneDirectoryId: $(this).attr('data-id')
+              }
+			}) .done(function (response) {
+                console.log(response);
+                $("#actionContainer").html(response);
+                $("#formContiner").html("");
+			})
+			.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("FAIL");
+			});
+	  });
+
+</script>
+

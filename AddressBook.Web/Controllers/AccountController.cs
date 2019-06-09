@@ -7,6 +7,7 @@ using System.Web.Security;
 using AddressBook.Database;
 using AddressBook.Entities;
 using AddressBook.Service;
+using AddressBook.Web.Models;
 
 namespace AddressBook.Web.Controllers
 {
@@ -51,6 +52,7 @@ namespace AddressBook.Web.Controllers
             bool ret = userLoginService.authenticationUser(obUserLogin.UserName, obUserLogin.UserPwd);
             if (ret)
             {
+                
                 return RedirectToAction("Index","Home");
             }
             else
