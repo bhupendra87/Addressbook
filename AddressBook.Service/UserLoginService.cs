@@ -33,6 +33,7 @@ namespace AddressBook.Service
             }
             catch (Exception)
             {
+
                 return false;
             }
            
@@ -49,28 +50,6 @@ namespace AddressBook.Service
             {
                 return false;
             }
-        }
-
-        public static UserLogin getLoggedInUser()
-        {
-           AddressBookContext db1 = new AddressBookContext();
-            UserLogin objUserLoginDetails = null;
-            try
-            {
-                string user_name1 = System.Web.HttpContext.Current.User.Identity.Name;
-                if (!string.IsNullOrWhiteSpace(System.Web.HttpContext.Current.User.Identity.Name))
-                {
-                    string user_name = System.Web.HttpContext.Current.User.Identity.Name;
-                    objUserLoginDetails = db1.UserLogins.Where(a => a.UserName == user_name.Trim()).FirstOrDefault();
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-
-            }
-            return objUserLoginDetails;
         }
     }
 }

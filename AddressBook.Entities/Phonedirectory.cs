@@ -14,6 +14,6 @@ namespace AddressBook.Entities
         public string  Email  { get; set; }
         public string  Website{ get; set; }
         public string Address { get; set; }
-        public virtual UserLogin UserLogin { get; set; }
+        public UserLogin UserLogin { get; set; }
     }
 }

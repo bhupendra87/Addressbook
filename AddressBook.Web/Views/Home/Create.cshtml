@@ -1,10 +1,9 @@
 ﻿@model AddressBook.Entities.Phonedirectory
 
-@*@using (Html.BeginForm("Create", "Home", FormMethod.Post))*@
-@*@using (Ajax.BeginForm("Create", "Home", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure", HttpMethod = "POST", LoadingElementId = "progress" }, new { enctype = "multipart/form-data" }))*@
-@*{*@
-    @*@Html.AntiForgeryToken()*@
-<form id="postFormData">
+@using (Html.BeginForm("Create","Home",FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
     <div class="form-horizontal">
         <h4>Phonedirectory</h4>
         <hr />
@@ -51,46 +50,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @*<input type="submit" value="Create" class="btn btn-default" />*@
-                <button id="saveBtn" type="button" class="btn btn-primary">Save</button>
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
-</form>
-@*}*@
- <script type="text/javascript">
-     $("#saveBtn").click(function () {
-		  $.ajax({
-				type: 'POST',
-				url: '@Url.Action("Create", "Home")',
-                data: $("#postFormData").serialize()
-			}) .done(function (response) {
-                  console.log(response);
-                $("#listContiner").html(response);
-                //$("#formContiner").html("");				
-			})
-			.fail(function (XMLHttpRequest, textStatus, errorThrown) {
-				alert("FAIL");
-			});
-     });
-
-     $(".editBtn").click(function () {
-		  $.ajax({
-				type: 'GET',
-				url: '@Url.Action("Edit", "Home")',
-              data: {
-                  phoneDirectoryId: $(this).attr('data-id')
-              }
-			}) .done(function (response) {
-                console.log(response);
-                $("#actionContainer").html(response);
-                $("#formContiner").html("");
-			})
-			.fail(function (XMLHttpRequest, textStatus, errorThrown) {
-				alert("FAIL");
-			});
-	  });
-     
-    </script>
-
-
+}

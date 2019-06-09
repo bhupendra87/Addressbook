@@ -1,22 +1,15 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Phonedirectory";
 }
-@if (ViewBag.message != null)
+@if(ViewBag.message !=null)
 {
     <h4>@ViewBag.message</h4>
 }
-<div id="formContiner">
-    @{ Html.RenderAction("Create"); }
-</div>
-<div id="actionContainer">
-</div>
-<div id="listContiner">
-    @{ Html.RenderAction("List"); }
-</div>
-@*@section scripts {
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-}*@
 
+@{ Html.RenderAction("Create"); }
+
+@{ Html.RenderAction("List"); }
 
 
 
